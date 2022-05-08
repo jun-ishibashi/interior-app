@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::name('post.')
+    ->group(function() {
+        Route::get('/', 'App\Http\Controllers\PostController@index')->name('index');
+    });
