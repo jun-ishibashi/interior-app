@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::name('post.')
+    ->group(function() {
+        Route::get('/', 'App\Http\Controllers\PostController@index')->name('index');
+    });
+    
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
