@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 // models
 use App\Models\Post;
@@ -20,8 +21,12 @@ class PostController extends Controller
   {
     $posts = Post::all();
     $images = array();
+    foreach($posts as $p) {
+      array_push($images, Storage::url($p->image_path));
+    }
     return Inertia::render('Home', [
-      'posts' => $posts
+      'posts' => $posts,
+      'images' => $images
     ]);
   }
 

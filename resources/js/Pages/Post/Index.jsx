@@ -9,6 +9,7 @@ export default function Index(props) {
   console.log(props)
   return (
     <>
+    <img src={props.images[0]} />
     </>
   )
 }
