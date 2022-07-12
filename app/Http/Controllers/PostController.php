@@ -19,14 +19,9 @@ class PostController extends Controller
    */
   public function index()
   {
-    $posts = Post::all();
-    $images = array();
-    foreach($posts as $p) {
-      array_push($images, Storage::url($p->image_path));
-    }
+    $posts = Post::select('id', 'title', 'user_id', 'image_path')->get();
     return Inertia::render('Home', [
-      'posts' => $posts,
-      'images' => $images
+      'posts' => $posts
     ]);
   }
 
@@ -52,9 +47,8 @@ class PostController extends Controller
     $images = $request->images;
     $imagePath = '';
     foreach ($images as $image) {
-      $imagePath = $image->store('image', 'public');
+      $imagePath = Storage::url($image->store('image', 'public'));
     }
-    Log::debug($imagePath);
     Post::create([
       'title' => $request->title,
       'user_id' => $request->user_id,
@@ -72,8 +66,9 @@ class PostController extends Controller
    */
   public function show($id)
   {
-    return view('post.show', [
-      'post' => Post::find($id),
+    $post = Post::select('id', 'title', 'user_id', 'image_path')->find($id);
+    return Inertia::render('PostContent', [
+      'post' => $post 
     ]);
   }
 
