@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 // models
 use App\Models\Post;
+use App\Models\Media;
 
 class PostController extends Controller
 {
@@ -19,9 +20,14 @@ class PostController extends Controller
    */
   public function index()
   {
-    $posts = Post::select('id', 'title', 'user_id', 'image_path')->get();
+    $posts = Post::select('id', 'title', 'user_id')->get();
+    $medias = $posts->map(function($post) {
+      return $post->media[0]->path;
+    });
+    Log::debug($medias);
     return Inertia::render('Home', [
-      'posts' => $posts
+      'posts' => $posts,
+      'medias' => $medias
     ]);
   }
 
@@ -45,17 +51,23 @@ class PostController extends Controller
   {
     Log::debug($request);
     $images = $request->images;
-    $imagePath = '';
+    $imagePaths = [];
     foreach ($images as $image) {
-      $imagePath = Storage::url($image->store('image', 'public'));
+      // 現状メディアは画像だけなので、フォルダはpublic/image/...で固定
+      array_push($imagePaths, Storage::url($image->store('image', 'public')));
     }
-    Post::create([
+    $post = Post::create([
       'title' => $request->title,
       'user_id' => $request->user_id,
-      'image_path' => $imagePath,
       'ip_address' => 'default value'
     ]);
-    return redirect()->route('post.index');
+    $post->media()->createMany(array_map(function($path) use ($post) {
+      return [
+        'post_id' => $post->id,
+        'path' => $path
+      ];
+    }, $imagePaths));
+    return back();
   }
 
   /**
@@ -66,9 +78,11 @@ class PostController extends Controller
    */
   public function show($id)
   {
-    $post = Post::select('id', 'title', 'user_id', 'image_path')->find($id);
+    $post = Post::select('id', 'title', 'user_id')->find($id);
+    $medias = $post->media;
     return Inertia::render('PostContent', [
-      'post' => $post 
+      'post' => $post,
+      'medias' => $medias
     ]);
   }
 

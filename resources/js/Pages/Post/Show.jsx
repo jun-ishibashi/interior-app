@@ -1,11 +1,10 @@
 import React from "react";
-import { useState } from "react";
-import axios from "axios";
+import ImageGallery from 'react-image-gallery';
 
 
 
 export default function Show(props) {
-
+  const shows = props.medias.map(m => {return {original: m.path}});
   console.log(props)
   return (
     <>
@@ -14,7 +13,7 @@ export default function Show(props) {
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
             <div>
               <div className="h-64 md:h-auto bg-gray-100 overflow-hidden rounded-lg shadow-lg">
-                <img src={props.post.image_path} loading="lazy" alt="Photo by Martin Sanchez" className="w-full h-full object-cover object-center" />
+                <ImageGallery items={shows} showThumbnails={false} />
               </div>
             </div>
             <div className="md:pt-8">
