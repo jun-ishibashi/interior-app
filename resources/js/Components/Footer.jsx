@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Footer() {
+  let titlename = document.title
   return (
     <>
       <div class="pt-4 sm:pt-10 lg:pt-12">
@@ -13,7 +14,7 @@ export default function Footer() {
                     <path d="M96 0V47L48 94H0V47L48 0H96Z" />
                   </svg>
 
-                  Interior_app
+                  {titlename}
                 </a>
               </div>
 

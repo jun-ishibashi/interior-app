@@ -3,10 +3,11 @@ import Modal from "./Modal";
 import Create from '@/Pages/Post/Create'
 
 export default function Navbar() {
+  let titlename = document.title
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
-        <a className="btn btn-ghost normal-case text-xl">interior_app</a>
+        <a className="btn btn-ghost normal-case text-xl">{titlename}</a>
       </div>
       <div className="navbar-center">
         <div className="form-control">
