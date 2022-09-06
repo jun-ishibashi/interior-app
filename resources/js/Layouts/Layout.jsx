@@ -1,13 +1,13 @@
 import react from 'react'
 import Navbar from '@/Components/Navbar'
 
-export default function Layout({ children }) {
+export default function Layout( props ) {
   return (
     <>
-      <Navbar />
+      <Navbar {...props}/>
       <div className="flex flex-col w-full">
       </div>
-      { children }
+      { props.children }
     </>
   )
 }

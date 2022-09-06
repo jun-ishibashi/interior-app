@@ -5,7 +5,7 @@ import Index from "./Post/Index";
 export default function Home(props) {
   return (
     <>
-      <Layout>
+      <Layout {...props}>
         <Index {...props} />
       </Layout>
     </>
