@@ -9,7 +9,6 @@ export default function Index(props) {
     </a>
   ));
 
-  console.log(props)
   return (
     <>
       <div className="py-6 sm:py-8 lg:py-12">

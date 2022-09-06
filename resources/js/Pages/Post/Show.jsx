@@ -5,7 +5,6 @@ import ImageGallery from 'react-image-gallery';
 
 export default function Show(props) {
   const shows = props.medias.map(m => {return {original: m.path}});
-  console.log(props)
   return (
     <>
       <div className="py-6 sm:py-8 lg:py-12">

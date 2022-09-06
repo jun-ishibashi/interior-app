@@ -19,9 +19,7 @@ export default function Create() {
   }, []);
 
   const cancel = () => {
-    console.log('cancel')
     reset('title', 'user_id', 'images');
-    console.log(data);
   }
 
   const setFiles = (files) => {
@@ -42,7 +40,6 @@ export default function Create() {
 
   const submit = (e) => {
     setData('user_id', 0);
-    console.log(data);
     post(route('post.store'), {
       onSuccess: () => reset('title', 'user_id', 'images'),
     });
